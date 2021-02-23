@@ -1,0 +1,61 @@
+.login {
+    flex-direction: column;
+    margin-top: 25px;
+}
+
+#lgb {
+    margin: 10px;
+}
+
+
+
+#CryptoSend {
+    width: 100px;
+       
+}
+
+#CryptoGet {
+    width: 100px;
+}
+
+
+#up {
+    margin: 20px;
+}
+
+
+#up-line {
+    margin-top: 10px;
+}
+
+#Swap-Btn {
+    margin: 35px;
+}
+
+#box {
+
+    margin-top: 200px;
+
+}
+
+
+#slider {
+    width:500px;
+    margin: 20px;
+}
+
+#rhead {
+    margin: 20px;
+}
+
+#radd {
+    margin-top: 20px;
+}
+
+#Transfer-btn{
+    margin-top: 20px;
+}
+
+#recadd{
+    margin-top: 20px;
+}
