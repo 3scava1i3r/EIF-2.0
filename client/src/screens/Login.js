@@ -17,9 +17,6 @@ import { useUser } from "../lib/hooks";
 // Setting network to localhost blockchain
 
 
-
-
-
 /* const web3 = new Web3(magic.rpcProvider);
 console.log(web3) */
 /* const email = 'tripathi.hritwik@gmail.com' */

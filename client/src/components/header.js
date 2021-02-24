@@ -3,9 +3,13 @@ import { Link } from "react-router-dom";
 import './header.css'
 import { Menu, Dropdown } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-
+import { Button } from '@material-ui/core';
+import { useUser } from "../lib/hooks";
 
 export default function Header() {
+    
+  const user = useUser();
+
     return (
       <nav className="header">
         <Link to="/home">
@@ -29,6 +33,23 @@ export default function Header() {
             </div>
           </Link>
         </div>
+
+        {user ? (
+          <Button
+            href={`${process.env.REACT_APP_SERVER_URL}/api/logout`}
+            variant="outlined"
+            color="secondary"
+            id="headbtn"
+          >
+            Log Out
+          </Button>
+        ) : (
+          <Link to="/login" className="header_link">
+            <div className="header_options">
+              <span className="h">Login</span>
+            </div>
+          </Link>
+        )}
 
         <div></div>
       </nav>

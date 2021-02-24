@@ -1,17 +1,23 @@
 import { useEffect } from "react";
 import useSWR from "swr";
 import { useHistory } from "react-router-dom";
-import { Router, browserHistory } from "react-router";
 
 const fetchUser = (url) =>
-  fetch(url)
+  fetch(url, {
+    method: "GET",
+    credentials: "include",
+  })
     .then((r) => r.json())
     .then((data) => {
       return { user: data?.user || null };
     });
 
 export function useUser({ redirectTo, redirectIfFound } = {}) {
-  const { data, error } = useSWR("/api/user", fetchUser);
+  const history = useHistory();
+  const { data, error } = useSWR(
+    `${process.env.REACT_APP_SERVER_URL}/api/user`,
+    fetchUser
+  );
   const user = data?.user;
   const finished = Boolean(data);
   const hasUser = Boolean(user);
@@ -24,7 +30,7 @@ export function useUser({ redirectTo, redirectIfFound } = {}) {
       // If redirectIfFound is also set, redirect if the user was found
       (redirectIfFound && hasUser)
     ) {
-      Router.push(redirectTo);
+      history.push(redirectTo);
     }
   }, [redirectTo, redirectIfFound, finished, hasUser]);
   return error ? null : user;
