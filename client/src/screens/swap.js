@@ -63,9 +63,9 @@ export default function Swap() {
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={10}>ETH</MenuItem>
+                  <MenuItem value={20}>DAI</MenuItem>
+                  <MenuItem value={30}>LINK</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -99,9 +99,9 @@ export default function Swap() {
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={10}>ETH</MenuItem>
+                  <MenuItem value={20}>DAI</MenuItem>
+                  <MenuItem value={30}>LINK</MenuItem>
                 </Select>
               </FormControl>
             </div>

@@ -10,6 +10,7 @@
 
 .h {
  margin-left: 10px;
+ margin-top: 10px;
 }
 
 
@@ -32,7 +33,7 @@
     color: white;
 }
 #headbtn {
-    margin-left: 10px;
-    margin-bottom: 2px;
+    margin-left: 5px;
+    margin-bottom: 5px;
     color: white;
 }

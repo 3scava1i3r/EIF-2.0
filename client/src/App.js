@@ -9,6 +9,7 @@ import Login from '../src/screens/Login'
 import Swap from '../src/screens/swap'
 import Transfer from '../src/screens/transfer'
 import Home from '../src/screens/Home'
+import CreateRFT from '../src/screens/createRFT'
 
 function App() {
   return (
@@ -18,12 +19,15 @@ function App() {
           <Route path="/transfer">
             <Header />
             <Transfer />
-            
           </Route>
           <Route path="/swap">
             <Header />
             <Swap />
-            
+          </Route>
+          <Route path="/create">
+            <Header />
+            <CreateRFT />
+      
           </Route>
           <Route path="/login">
             <Login />
@@ -32,7 +36,6 @@ function App() {
           <Route path="/">
             <Header />
             <Home />
-            
           </Route>
         </Switch>
       </div>

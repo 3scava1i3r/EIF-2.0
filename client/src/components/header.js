@@ -32,6 +32,12 @@ export default function Header() {
               <span className="h">Swap</span>
             </div>
           </Link>
+
+          <Link to="/create" className="header_link">
+            <div className="header_options">
+              <span className="h">Create</span>
+            </div>
+          </Link>
         </div>
 
         {user ? (
@@ -44,14 +50,14 @@ export default function Header() {
             Log Out
           </Button>
         ) : (
-          <Link to="/login" className="header_link">
-            <div className="header_options">
-              <span className="h">Login</span>
-            </div>
-          </Link>
+          <Button id="headbtn">
+            <Link to="/login" className="header_link">
+              <div className="header_options">
+                <span className="h">Login</span>
+              </div>
+            </Link>
+          </Button>
         )}
-
-        <div></div>
       </nav>
     );
 }

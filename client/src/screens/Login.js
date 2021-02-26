@@ -1,5 +1,5 @@
 import React , { useEffect , useState } from 'react'
-import { Button } from '@material-ui/core'
+import { Button , TextField } from '@material-ui/core'
 import './main.css'
 import { Magic } from "magic-sdk";
 import { OAuthExtension } from "@magic-ext/oauth";
@@ -7,6 +7,8 @@ import Web3 from "web3";
 import { useHistory } from "react-router-dom";
 import { useUser } from "../lib/hooks";
 
+
+import './main.css'
 /* const magic = new Magic("pk_test_7F9770924CF1D820"); */
 
 /* const customNodeOptions = {
@@ -48,7 +50,17 @@ const a = async(email) => {
 
 
 
+
+
 export default function Login() {
+    
+  const [mail , setmail ] = useState('');
+
+  const inputEvent = (e) => {
+    /* console.log(e.target.value); */
+    setmail(e.target.value);
+    console.log(mail)
+  };
 
 
     useUser({ redirectTo: "/", redirectIfFound: true });
@@ -67,10 +79,11 @@ export default function Login() {
     }, [magic]);
 
     async function handleLoginWithEmail(email) {
+      console.log(mail)
       try {
         setDisabled(true); // disable login button to prevent multiple emails from being triggered
         let didToken = await magic.auth.loginWithMagicLink({
-          email: "tripathi.hritwik@gmail.com",
+          email: mail,
           redirectURI: `${process.env.REACT_APP_CLIENT_URL}/callback`,
         });
         authenticateWithServer(didToken);
@@ -96,14 +109,28 @@ export default function Login() {
 
     return (
       <div className="login">
-        <>
-          <Button id="lgb" variant="contained" color="primary" onClick={handleLoginWithEmail}>
+        <div id="email">
+          <TextField
+            id="login"
+            label="Email Id"
+            onChange={inputEvent}
+            value={mail}
+          />
+        </div>
+
+        <div>
+          <Button
+            id="lgb"
+            variant="contained"
+            color="primary"
+            onClick={handleLoginWithEmail}
+          >
             Create a new account
           </Button>
           <Button id="lgb" variant="contained" color="primary">
             Import an Account
           </Button>
-        </>
+        </div>
       </div>
     );
 }

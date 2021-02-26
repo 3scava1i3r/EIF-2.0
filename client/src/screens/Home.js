@@ -10,7 +10,7 @@ export default function Home() {
       <div>
         <h1>home</h1>
         {user ? <h2> You are logged in !</h2> : <h2> Not logged in</h2>}
-        
+
       </div>
     );
 }
