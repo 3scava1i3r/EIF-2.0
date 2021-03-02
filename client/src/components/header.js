@@ -38,6 +38,12 @@ export default function Header() {
               <span className="h">Create</span>
             </div>
           </Link>
+
+          <Link to="/market" className="header_link">
+            <div className="header_options">
+              <span className="h">Market</span>
+            </div>
+          </Link>
         </div>
 
         {user ? (
