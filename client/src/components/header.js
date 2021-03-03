@@ -27,11 +27,11 @@ export default function Header() {
             </div>
           </Link>
 
-          <Link to="/swap" className="header_link">
+          {/* <Link to="/swap" className="header_link">
             <div className="header_options">
               <span className="h">Swap</span>
             </div>
-          </Link>
+          </Link> */}
 
           <Link to="/create" className="header_link">
             <div className="header_options">

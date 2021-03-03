@@ -5,6 +5,11 @@ import { Magic } from "magic-sdk";
 /* import Web3 from "web3"; */
 import { ethers } from "ethers";
 
+
+const dai = require("../abi/DAI.json");
+const WBTC = require("../abi/WBTC.json");
+const WETH = require("../abi/WETH.json");
+
 export default function Home() {
   const user = useUser();
   console.log(user);
@@ -17,7 +22,6 @@ export default function Home() {
   /* const web3 = new Web3(magic.rpcProvider);  */
 
   const provider = new ethers.providers.Web3Provider(magic.rpcProvider);
-  
 
 
   const a = async() => {
@@ -28,9 +32,13 @@ export default function Home() {
     const address = await signer.getAddress();
     console.log(address);
 
+    const balance = ethers.utils.formatEther(
+      await provider.getBalance(address) // Balance is in wei
+    );
 
+    console.log(balance)
 
-  /* const fromAddress = (await web3.eth.getAccounts())[0];
+    /* const fromAddress = (await web3.eth.getAccounts())[0];
 
   const bal = await web3.eth.getBalance(fromAddress);
   
@@ -39,502 +47,32 @@ export default function Home() {
   console.log(fromAddress) */
 
 
-  const WBTCContract = new ethers.Contract('0xc7ef5c611beC84354fC22c59F2ac0601D6aDA029', [
-    {
-      inputs: [
-        { internalType: "string", name: "name", type: "string" },
-        { internalType: "string", name: "symbol", type: "string" },
-        { internalType: "uint8", name: "decimals", type: "uint8" },
-        { internalType: "uint256", name: "cap", type: "uint256" },
-        { internalType: "uint256", name: "initialSupply", type: "uint256" },
-        { internalType: "bool", name: "transferEnabled", type: "bool" },
-        { internalType: "bool", name: "mintingFinished", type: "bool" },
-      ],
-      stateMutability: "nonpayable",
-      type: "constructor",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "address",
-          name: "owner",
-          type: "address",
-        },
-        {
-          indexed: true,
-          internalType: "address",
-          name: "spender",
-          type: "address",
-        },
-        {
-          indexed: false,
-          internalType: "uint256",
-          name: "value",
-          type: "uint256",
-        },
-      ],
-      name: "Approval",
-      type: "event",
-    },
-    { anonymous: false, inputs: [], name: "MintFinished", type: "event" },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "address",
-          name: "previousOwner",
-          type: "address",
-        },
-        {
-          indexed: true,
-          internalType: "address",
-          name: "newOwner",
-          type: "address",
-        },
-      ],
-      name: "OwnershipTransferred",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "bytes32",
-          name: "role",
-          type: "bytes32",
-        },
-        {
-          indexed: true,
-          internalType: "address",
-          name: "account",
-          type: "address",
-        },
-        {
-          indexed: true,
-          internalType: "address",
-          name: "sender",
-          type: "address",
-        },
-      ],
-      name: "RoleGranted",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "bytes32",
-          name: "role",
-          type: "bytes32",
-        },
-        {
-          indexed: true,
-          internalType: "address",
-          name: "account",
-          type: "address",
-        },
-        {
-          indexed: true,
-          internalType: "address",
-          name: "sender",
-          type: "address",
-        },
-      ],
-      name: "RoleRevoked",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "address",
-          name: "from",
-          type: "address",
-        },
-        { indexed: true, internalType: "address", name: "to", type: "address" },
-        {
-          indexed: false,
-          internalType: "uint256",
-          name: "value",
-          type: "uint256",
-        },
-      ],
-      name: "Transfer",
-      type: "event",
-    },
-    { anonymous: false, inputs: [], name: "TransferEnabled", type: "event" },
-    {
-      inputs: [],
-      name: "BUILT_ON",
-      outputs: [{ internalType: "string", name: "", type: "string" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "DEFAULT_ADMIN_ROLE",
-      outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "MINTER_ROLE",
-      outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "OPERATOR_ROLE",
-      outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "owner", type: "address" },
-        { internalType: "address", name: "spender", type: "address" },
-      ],
-      name: "allowance",
-      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "spender", type: "address" },
-        { internalType: "uint256", name: "amount", type: "uint256" },
-      ],
-      name: "approve",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "spender", type: "address" },
-        { internalType: "uint256", name: "value", type: "uint256" },
-      ],
-      name: "approveAndCall",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "spender", type: "address" },
-        { internalType: "uint256", name: "value", type: "uint256" },
-        { internalType: "bytes", name: "data", type: "bytes" },
-      ],
-      name: "approveAndCall",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "address", name: "account", type: "address" }],
-      name: "balanceOf",
-      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
-      name: "burn",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "account", type: "address" },
-        { internalType: "uint256", name: "amount", type: "uint256" },
-      ],
-      name: "burnFrom",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "cap",
-      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "decimals",
-      outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "spender", type: "address" },
-        { internalType: "uint256", name: "subtractedValue", type: "uint256" },
-      ],
-      name: "decreaseAllowance",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "enableTransfer",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "finishMinting",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "bytes32", name: "role", type: "bytes32" }],
-      name: "getRoleAdmin",
-      outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "bytes32", name: "role", type: "bytes32" },
-        { internalType: "uint256", name: "index", type: "uint256" },
-      ],
-      name: "getRoleMember",
-      outputs: [{ internalType: "address", name: "", type: "address" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "bytes32", name: "role", type: "bytes32" }],
-      name: "getRoleMemberCount",
-      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "bytes32", name: "role", type: "bytes32" },
-        { internalType: "address", name: "account", type: "address" },
-      ],
-      name: "grantRole",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "bytes32", name: "role", type: "bytes32" },
-        { internalType: "address", name: "account", type: "address" },
-      ],
-      name: "hasRole",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "spender", type: "address" },
-        { internalType: "uint256", name: "addedValue", type: "uint256" },
-      ],
-      name: "increaseAllowance",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "value", type: "uint256" },
-      ],
-      name: "mint",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "mintingFinished",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "name",
-      outputs: [{ internalType: "string", name: "", type: "string" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "owner",
-      outputs: [{ internalType: "address", name: "", type: "address" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "tokenAddress", type: "address" },
-        { internalType: "uint256", name: "tokenAmount", type: "uint256" },
-      ],
-      name: "recoverERC20",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "renounceOwnership",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "bytes32", name: "role", type: "bytes32" },
-        { internalType: "address", name: "account", type: "address" },
-      ],
-      name: "renounceRole",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "bytes32", name: "role", type: "bytes32" },
-        { internalType: "address", name: "account", type: "address" },
-      ],
-      name: "revokeRole",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "bytes4", name: "interfaceId", type: "bytes4" }],
-      name: "supportsInterface",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "symbol",
-      outputs: [{ internalType: "string", name: "", type: "string" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "totalSupply",
-      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "value", type: "uint256" },
-      ],
-      name: "transfer",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "value", type: "uint256" },
-      ],
-      name: "transferAndCall",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "value", type: "uint256" },
-        { internalType: "bytes", name: "data", type: "bytes" },
-      ],
-      name: "transferAndCall",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "transferEnabled",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "from", type: "address" },
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "value", type: "uint256" },
-      ],
-      name: "transferFrom",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "from", type: "address" },
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "value", type: "uint256" },
-        { internalType: "bytes", name: "data", type: "bytes" },
-      ],
-      name: "transferFromAndCall",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "from", type: "address" },
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "value", type: "uint256" },
-      ],
-      name: "transferFromAndCall",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
-      name: "transferOwnership",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-  ], provider);
-
-
-
-  console.log(WBTCContract);
-  /* const WBTCBal = await WBTCContract.methods.balanceOf(fromAddress).call()
-  console.log(WBTCBal)  */
+  /* const WBTCContract = new ethers.Contract('0xc7ef5c611beC84354fC22c59F2ac0601D6aDA029', WBTC  , provider);
   const WBTCWithSigner = WBTCContract.connect(signer);
   const WBTCBal = await WBTCContract.balanceOf(address)
   const l = await ethers.utils.formatUnits(WBTCBal, 18);
   console.log(l);
-  
-  
+  */
+
+
+  const DAITkn = new ethers.Contract('0xaD6D458402F60fD3Bd25163575031ACDce07538D' , dai , provider)
+  const DAIWithSigner = DAITkn.connect(signer);
+  const DAIBal = await DAITkn.balanceOf(address);
+  const b = await ethers.utils.formatUnits(DAIBal, 18);
+  console.log(b); 
+
+
+  const WethContract = new ethers.Contract(
+    "0xc778417E063141139Fce010982780140Aa0cD5Ab",
+    WETH,
+    provider
+  );
+  const WethWithSigner = WethContract.connect(signer);
+  const WethBal = await WethContract.balanceOf(address);
+  const l = await ethers.utils.formatUnits(WethBal, 18);
+  console.log(l);
+
+
 }
 a();
   
