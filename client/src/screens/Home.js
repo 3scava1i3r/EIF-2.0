@@ -2,20 +2,8 @@ import React from 'react'
 import { useUser } from '../lib/hooks'
 import { Button } from '@material-ui/core'
 import { Magic } from "magic-sdk";
-import Web3 from "web3";
+/* import Web3 from "web3"; */
 import { ethers } from "ethers";
-
-
-import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-
-
 
 export default function Home() {
   const user = useUser();
@@ -24,17 +12,13 @@ export default function Home() {
   const magic = new Magic(process.env.REACT_APP_MAGIC_PUBLISHABLE_KEY, {
     network: "ropsten",
   });
-  
-  
+
+  console.log(magic)
   /* const web3 = new Web3(magic.rpcProvider);  */
 
   const provider = new ethers.providers.Web3Provider(magic.rpcProvider);
-
-  // ⭐️ After user is successfully authenticated
-
   
 
-  
 
   const a = async() => {
 
@@ -42,14 +26,7 @@ export default function Home() {
 
     // Get user's Ethereum public address
     const address = await signer.getAddress();
-
-    // Get user's balance in ether
-    const balance = ethers.utils.formatEther(
-      await provider.getBalance(address) // Balance is in wei
-    );
-
-
-
+    console.log(address);
 
 
 
@@ -59,11 +36,10 @@ export default function Home() {
   
   const l = await web3.utils.fromWei(bal)
   console.log(l)
-  console.log(fromAddress)
+  console.log(fromAddress) */
 
 
-
-  const WBTCContract = new web3.eth.Contract([
+  const WBTCContract = new ethers.Contract('0xc7ef5c611beC84354fC22c59F2ac0601D6aDA029', [
     {
       inputs: [
         { internalType: "string", name: "name", type: "string" },
@@ -546,61 +522,27 @@ export default function Home() {
       stateMutability: "nonpayable",
       type: "function",
     },
-  ], '0xc7ef5c611beC84354fC22c59F2ac0601D6aDA029');
-  console.log(WBTCContract)  
+  ], provider);
 
-  const WBTCBal = await WBTCContract.methods.balanceOf(fromAddress).call()
-  console.log(WBTCBal) */
+
+
+  console.log(WBTCContract);
+  /* const WBTCBal = await WBTCContract.methods.balanceOf(fromAddress).call()
+  console.log(WBTCBal)  */
+  const WBTCWithSigner = WBTCContract.connect(signer);
+  const WBTCBal = await WBTCContract.balanceOf(address)
+  const l = await ethers.utils.formatUnits(WBTCBal, 18);
+  console.log(l);
+  
   
 }
-  a();
+a();
   
-    function createData(name, calories, fat, carbs, protein) {
-      return { name, calories, fat, carbs, protein };
-    }
-      
-    const rows = [
-      createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-      createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-      createData("Eclair", 262, 16.0, 24, 6.0),
-      createData("Cupcake", 305, 3.7, 67, 4.3),
-      createData("Gingerbread", 356, 16.0, 49, 3.9),
-    ];
+  
+   
 
   return (
     <div>
-      <TableContainer component={Paper}>
-        <Table
-          
-          size="small"
-          aria-label="a dense table"
-        >
-          <TableHead>
-            <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.name}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-
       <h1>home</h1>
       {user ? <h2> You are logged in !</h2> : <h2> Not logged in</h2>}
 
